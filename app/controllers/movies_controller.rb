@@ -1,4 +1,6 @@
 class MoviesController < ApplicationController
+  
+  # add a comment to test version control
 
   def show
     id = params[:id] # retrieve movie ID from URI route
