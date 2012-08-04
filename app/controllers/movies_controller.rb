@@ -22,15 +22,12 @@ class MoviesController < ApplicationController
       session[:ratings] = params[:ratings]
     elsif !(session.key? :ratings)
       session[:ratings] = {}
-      @all_ratings.each do |x|
-        session[:ratings][x] =1
-      end
+ 
     end
     
 
     @order_by = session[:sort];
     
-
     
     @ratings = session[:ratings]
 
