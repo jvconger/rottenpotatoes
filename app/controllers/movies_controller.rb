@@ -11,23 +11,35 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @order_by = params[:sort];
     
     @all_ratings = Movie.all_ratings
     
-    if (@order_by==:title)
-      @title_class = 'hilite'
-    else
-      @title_class = nil
-    end  
-    if (@order_by==:release_date)
-        @release_class = 'hilite'
-    else
-      @release_class = nil
+    if (params[:sort]) 
+      session[:sort] = params[:sort]
     end
+    
+    if (params.key? :ratings)
+      session[:ratings] = params[:ratings]
+    elsif !(session.key? :ratings)
+      session[:ratings] = {}
+      @all_ratings.each do |x|
+        session[:ratings][x] =1
+      end
+    end
+    
+
+    @order_by = session[:sort];
+    
+
+    
+    @ratings = session[:ratings]
+
+    @movies = Movie.order(@order_by).find_all_by_rating(@ratings.keys)
 
 
-    @movies = Movie.all :order => @order_by
+    if (@movies == nil)
+      @movies = [];
+    end
 
 
 

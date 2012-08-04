@@ -2,9 +2,10 @@
 %h1 All Movies
 = form_tag movies_path, :method => :get do
   Include: 
+  - ratings = @ratings
   - @all_ratings.each do |rating|
     = rating
-    = check_box_tag "ratings[#{rating}]"
+    = check_box_tag "ratings[#{rating}]", 1, if (ratings[rating]==nil) then false else :checked end
   = submit_tag 'Refresh'
 
 %table#movies
