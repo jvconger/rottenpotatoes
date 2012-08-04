@@ -3,7 +3,6 @@ class MoviesController < ApplicationController
   # add a comment to test version def control(args)
   # another test comment
   
-  end
 
   def show
     id = params[:id] # retrieve movie ID from URI route
