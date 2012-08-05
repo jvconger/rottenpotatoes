@@ -25,8 +25,6 @@ class MoviesController < ApplicationController
     elsif (session[:sort])
       params[:sort] = session[:sort]
       params_changed = true
-    else
-      session[:sort]=nil
     end
       
     
@@ -35,36 +33,36 @@ class MoviesController < ApplicationController
     elsif (session.key? :ratings)
       params[:ratings] = session[:ratings]
       params_changed = true
-    else
-      session[:ratings] = {}
     end
     
-    if !(session[:sort]=~/title|release_date/)
-      session[:sort]=nil
-    end
-    
-    if !(session[:ratings].respond_to? :keys)
-      session[:ratings] = {}
-    end
+ 
 
     if (params_changed)
       flash.keep
       redirect_to movies_path(index_options)
       
-    end
+    else
     
       @order_by = session[:sort]
       
       
       @ratings = session[:ratings]
-  
+      
+      if !(@order_by=~/title|release_date/)
+        @order_by=nil
+      end
+      
+      if !(@ratings.respond_to? :keys)
+        @ratings = {}
+      end
+    
       @movies = Movie.order(@order_by).find_all_by_rating(@ratings.keys)
   
   
       if (@movies == nil)
         @movies = [];
       end
-
+    end
 
 
   end

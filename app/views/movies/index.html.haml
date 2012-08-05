@@ -6,6 +6,7 @@
   - @all_ratings.each do |rating|
     = rating
     = check_box_tag "ratings[#{rating}]", 1, if (ratings[rating]==nil) then false else :checked end
+  = hidden_field :ratings, :ratings, :value=>1
   %input{:name=>:sort, :value=>session[:sort], :hidden=>:hidden}
   = submit_tag 'Refresh',:id=>:ratings_submit
 
